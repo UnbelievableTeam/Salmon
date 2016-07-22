@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+require 'json'
+class Array
+  def analyze_block
+    self.each do |line|
+      if line[0] == "#"
+        next
+      else
+        begin
+          data = line.gsub("\n", '').split("\t")
+          block_data = {
+            time: data.first,
+            type: data[1],
+            pointImg: data[2],
+            position: {
+              top: data[3],
+              left: data[4]
+            }
+          }
+          yield block_data
+        rescue
+          next
+        end
+      end
+    end
+  end
+end
+
+
+lines = IO.readlines '1.raw'
+easy_blocks = []
+lines.analyze_block do |block|
+  easy_blocks << block
+end
+
+level = {
+  name: "The Letter",
+  blocks: {
+    easy: easy_blocks,
+    normal: easy_blocks,
+    hard: easy_blocks
+  }
+}
+
+File.open('./1.json', 'w') do |file|
+  file.write level.to_json
+end
