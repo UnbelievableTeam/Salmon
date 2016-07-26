@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 require 'json'
+
+FIXEDGAP = 0.02
 class Array
   def analyze_block
     self.each do |line|
@@ -8,14 +10,15 @@ class Array
       else
         begin
           data = line.gsub("\n", '').split("\t")
+
+          time = data.first.split
+          time = time[0].to_f * 60 * 100 + time[1].to_f * 100 + time.last.to_i
           block_data = {
-            time: data.first,
-            type: data[1],
+            time: (time / (FIXEDGAP * 100)).to_i,
+            type: data[1].to_i,
             pointImg: data[2],
-            position: {
-              top: data[3],
-              left: data[4]
-            }
+            top: data[3].to_f,
+            left: data[4].to_f
           }
           yield block_data
         rescue
@@ -27,7 +30,7 @@ class Array
 end
 
 
-lines = IO.readlines '1.raw'
+lines = IO.readlines '1/easy.level'
 easy_blocks = []
 lines.analyze_block do |block|
   easy_blocks << block
@@ -35,13 +38,16 @@ end
 
 level = {
   name: "The Letter",
-  blocks: {
-    easy: easy_blocks,
-    normal: easy_blocks,
-    hard: easy_blocks
-  }
+  audio: "1-letter.mp3",
+  previewAudio: "1-letter-p.mp3",
+  sketch: "1-letter-sketch.jpg",
+  blocks: easy_blocks
 }
 
-File.open('./1.json', 'w') do |file|
+File.open('1/easy.json', 'w') do |file|
+  file.write easy_blocks.to_json
+end
+
+File.open('1/level.json', 'w') do |file|
   file.write level.to_json
 end

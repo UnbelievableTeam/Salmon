@@ -3,26 +3,43 @@ using System.Collections;
 
 public class BlockGenerater : MonoBehaviour {
 	//float width, height;
-	int count = 0;
 	public GameObject canvas;
 	public GameObject basicBlock;
+	Level level;
+	public TextAsset levelJson;
+	int updateCount = 0;
+	int nextBlockCount;
+	int blockCount = 0;
 	// Use this for initialization
 	void Start () {
 		/*
 		width = canvas.GetComponent<RectTransform> ().rect.width;
 		height = canvas.GetComponent<RectTransform> ().rect.height;
-		*/
+		*/ 
+		level = Level.CreateFromJSON(levelJson.text);
+		nextBlockCount = level.blocks [blockCount].time;
 	}
-	
-	// Update is called once per frame
-	void FixedUpdate () {
-		if (count++ % 200 == 0) {
-			var block = Instantiate (basicBlock);
-			block.transform.SetParent(canvas.transform);
-			block.GetComponent<RectTransform> ().anchorMin = new Vector2 (0, 1);
-			block.GetComponent<RectTransform> ().anchorMax = new Vector2 (0, 1);
-			block.GetComponent<RectTransform> ().SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left,30,100);
-			block.GetComponent<RectTransform> ().SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top,30,100);
+
+	void FixedUpdate() {
+		if (blockCount < level.blocks.Length) {
+			if (updateCount == nextBlockCount) {
+				while (blockCount < level.blocks.Length && level.blocks [blockCount].time == updateCount) {
+					instantiateFromBlock (level.blocks [blockCount]);
+					blockCount += 1;
+					if (blockCount < level.blocks.Length)
+						nextBlockCount = level.blocks [blockCount].time;
+				}
+			}
+			updateCount += 1;
 		}
+	}
+
+	void instantiateFromBlock (Block blockData) {
+		GameObject block = Instantiate(basicBlock);
+		block.transform.SetParent(canvas.transform);
+		block.GetComponent<RectTransform> ().anchorMin = new Vector2 (0, 1);
+		block.GetComponent<RectTransform> ().anchorMax = new Vector2 (0, 1);
+		block.GetComponent<RectTransform> ().SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left,blockData.left,100);
+		block.GetComponent<RectTransform> ().SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top,blockData.top,100);
 	}
 }
