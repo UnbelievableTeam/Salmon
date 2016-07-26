@@ -5,6 +5,7 @@ public class BlockGenerater : MonoBehaviour {
 	//float width, height;
 	public GameObject canvas;
 	public GameObject basicBlock;
+	public GameObject music;
 	Level level;
 	public TextAsset levelJson;
 	int updateCount = 0;
@@ -21,7 +22,7 @@ public class BlockGenerater : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		if (blockCount < level.blocks.Length) {
+		if (music.GetComponent<AudioSource>().enabled && blockCount < level.blocks.Length) {
 			if (updateCount == nextBlockCount) {
 				while (blockCount < level.blocks.Length && level.blocks [blockCount].time == updateCount) {
 					instantiateFromBlock (level.blocks [blockCount]);

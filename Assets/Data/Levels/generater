@@ -1,17 +1,17 @@
 #!/usr/bin/env ruby
 require 'json'
 
-FIXEDGAP = 0.02
+FIXEDGAP = 0.01
 class Array
   def analyze_block
     self.each do |line|
       if line[0] == "#"
         next
       else
-        begin
+        #begin
           data = line.gsub("\n", '').split("\t")
 
-          time = data.first.split
+          time = data.first.split('.')
           time = time[0].to_f * 60 * 100 + time[1].to_f * 100 + time.last.to_i
           block_data = {
             time: (time / (FIXEDGAP * 100)).to_i,
@@ -21,9 +21,9 @@ class Array
             left: data[4].to_f
           }
           yield block_data
-        rescue
-          next
-        end
+        #rescue
+        #  next
+        #end
       end
     end
   end
