@@ -66,7 +66,7 @@ public class Loading: MonoBehaviour {
 
 	public void Onclick ()
 	{
-		StartSplash(0,1);
+		StartSplash(1,1);
 		//      if(startAutomatically)
 		//      {
 		//          status = FadeStatus.FadeIn;

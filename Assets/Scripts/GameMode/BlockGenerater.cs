@@ -40,7 +40,7 @@ public class BlockGenerater : MonoBehaviour {
 
 	void instantiateFromBlock (Block blockData) {
 		GameObject block = Instantiate(basicBlock);
-		float blockHW = 190 * height * 2 / 1536;
+		float blockHW = 190 * 3;
 		block.transform.SetParent(canvas.transform);
 		block.GetComponent<RectTransform> ().anchorMin = new Vector2 (0, 1);
 		block.GetComponent<RectTransform> ().anchorMax = new Vector2 (0, 1);
