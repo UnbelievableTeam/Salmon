@@ -8,4 +8,5 @@ public class Block : System.Object {
 	public string pointImg;
 	public float top;
 	public float left;
+	public string sketchName;
 }

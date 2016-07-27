@@ -13,7 +13,7 @@ public class HitBlockAnimation : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		if (!isStop && animatedImage.GetComponent<RectTransform> ().localScale.x < 1.0) {
 			Growing (growingSpeed);
 		} else {
@@ -31,6 +31,7 @@ public class HitBlockAnimation : MonoBehaviour {
 		} else {
 			//Destroy (this.gameObject);
 		}
+		Destroy (this.gameObject);
 	}
 
 	public void Stop() {
