@@ -4,9 +4,19 @@ using UnityEngine.UI;
 
 public class HitBlock : MonoBehaviour {
 	public GameObject score;
+	private Animator ani;
+	//public GameObject Explorn;
+	//private Rigidbody2D Bullet;
 	// Use this for initialization
 	void Start () {
 		score = GameObject.Find("ScoreText");
+		ani=GetComponent<Animator> ();
+
+		//ani.playAutomatically = false;
+		//ani.CrossFade ("test41");
+
+		//Explorn = GameObject.Find ("Explosion");
+		//Bullet = Explorn.GetComponent<Rigidbody2D> ();
 	}
 	
 	// Update is called once per frame
@@ -28,13 +38,19 @@ public class HitBlock : MonoBehaviour {
 		/* For Debug */
 		if (Input.GetMouseButton (0)) {
 			checkIfClicked ();
+			//gameObject.GetComponent<Animation> ().Play("test40");
+
 		}
 	}
 
 	public void OnTouched() {
 		int scoreAdding = gameObject.GetComponent<HitBlockAnimation> ().GetScore ();
 		score.GetComponent<ScoreController> ().AddScore (scoreAdding);
-		Destroy (gameObject);
+		ani.SetTrigger ("play");
+		//Rigidbody2D clone;
+		//clone = Instantiate(Bullet, GameObject.position, GameObject.rotation);  // Bullet是一个Rigidbody，被克隆的对象； 后面两项分别是克隆后的出生位置和发射方向；
+		//clone.velocity = new Vector2(0, 0); // 分别表示在X,Y,Z轴方向上的速度
+		//Destroy (gameObject);
 	}
 
 	void checkIfTouched(Touch th) {
