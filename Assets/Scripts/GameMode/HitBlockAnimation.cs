@@ -5,7 +5,8 @@ public class HitBlockAnimation : MonoBehaviour {
 	public float initialScale = 0;
 	public float growingSpeed = 20;
 	public GameObject animatedImage;
-	bool isStop = false;
+	Animation anim;
+	public bool isStop = false;
 	// Use this for initialization
 	void Start () {
 		animatedImage.GetComponent <RectTransform>().localScale = new Vector3 (0, 0, 0);
@@ -25,8 +26,11 @@ public class HitBlockAnimation : MonoBehaviour {
 	}
 
 	public void Touched() {
-		isStop = true;
-		Destroy (this.gameObject);
+		if (!isStop) {
+			//Destroy (this.gameObject);
+		} else {
+			//Destroy (this.gameObject);
+		}
 	}
 
 	public void Stop() {
@@ -40,13 +44,16 @@ public class HitBlockAnimation : MonoBehaviour {
 	public int GetScore() {
 		float size = animatedImage.GetComponent<RectTransform> ().localScale.x;
 		int score = 0;
-		if (size >= 0.3 && size < 0.8){
+		if (size >= 0.3 && size < 0.8) {
 			score = 40;
 		} else if (size >= 0.8 && size < 0.95) {
 			score = 80;
-		} else if (size > 0.95){
+		} else if (size > 0.95) {
 			score = 100;
 		}
+		//anim = gameObject.GetComponent<Animation>();
+		//anim.Play ();
+		isStop = true;
 		return score;
 	}
 }
