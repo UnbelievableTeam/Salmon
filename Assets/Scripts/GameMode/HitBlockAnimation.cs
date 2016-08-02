@@ -5,11 +5,12 @@ public class HitBlockAnimation : MonoBehaviour {
 	public float initialScale = 0;
 	public float growingSpeed = 20;
 	public GameObject animatedImage;
-	Animation anim;
+	Animator anim;
 	public bool isStop = false;
 	// Use this for initialization
 	void Start () {
 		animatedImage.GetComponent <RectTransform>().localScale = new Vector3 (0, 0, 0);
+		anim = gameObject.GetComponent<Animator> ();
 	}
 	
 	// Update is called once per frame
@@ -26,11 +27,8 @@ public class HitBlockAnimation : MonoBehaviour {
 	}
 
 	public void Touched() {
-		if (!isStop) {
-			//Destroy (this.gameObject);
-		} else {
-			//Destroy (this.gameObject);
-		}
+		gameObject.GetComponent<HitBlock> ().loadBlockSketch ();
+		GameObject.Find("ScoreText").GetComponent<ScoreController> ().AddScore (GetScore());
 		Destroy (this.gameObject);
 	}
 
@@ -47,10 +45,15 @@ public class HitBlockAnimation : MonoBehaviour {
 		int score = 0;
 		if (size >= 0.3 && size < 0.8) {
 			score = 40;
+			anim.SetInteger ("Score", 1);
 		} else if (size >= 0.8 && size < 0.95) {
 			score = 80;
+			anim.SetInteger ("Score", 2);
 		} else if (size > 0.95) {
 			score = 100;
+			anim.SetInteger ("Score", 3);
+		} else {
+			anim.SetInteger ("Score", 0);
 		}
 		//anim = gameObject.GetComponent<Animation>();
 		//anim.Play ();

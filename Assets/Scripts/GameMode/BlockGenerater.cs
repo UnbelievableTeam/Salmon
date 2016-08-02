@@ -47,7 +47,7 @@ public class BlockGenerater : MonoBehaviour {
 		block.GetComponent<RectTransform> ().SetInsetAndSizeFromParentEdge(RectTransform.Edge.Left,width * blockData.left / 2048 - blockHW / 2,blockHW);
 		block.GetComponent<RectTransform> ().SetInsetAndSizeFromParentEdge(RectTransform.Edge.Top,height * blockData.top / 1536 - blockHW / 2,blockHW);
 		Texture2D ball = Resources.Load ("Pictures/Balls/" + blockData.pointImg) as Texture2D;
-		block.transform.GetChild (1).gameObject.GetComponent<Image> ().sprite = Sprite.Create(ball, new Rect(0,0, ball.width, ball.height), new Vector2(0.5f, 0.5f));
+		block.transform.GetChild (5).gameObject.GetComponent<Image> ().sprite = Sprite.Create(ball, new Rect(0,0, ball.width, ball.height), new Vector2(0.5f, 0.5f));
 		block.GetComponent<HitBlock> ().sketchName = blockData.sketchName;
 	}
 }

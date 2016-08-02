@@ -33,7 +33,7 @@ public class HitBlock : MonoBehaviour {
 		Destroy (gameObject);
 	}
 
-	void loadBlockSketch() {
+	public void loadBlockSketch() {
 		GameObject image = Instantiate(sketchImage);
 		var rect = canvas.GetComponent<RectTransform> ().rect;
 		image.transform.SetParent(canvas.transform);
